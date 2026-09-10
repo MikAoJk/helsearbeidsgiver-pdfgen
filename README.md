@@ -22,11 +22,8 @@ Alle endringer til templates osv. blir nå reflektert i nettleseren ved refresh 
 PDF-dokumentene genereres fra [Typst](https://typst.app/)-maler (`.typ`) i `templates`-mappen av [pdfgenrs](https://github.com/navikt/pdfgenrs). Testdata for lokal utvikling ligger i `data`-mappen. Endringer i maler, data, fonter eller ressurser krever omstart av utviklingsserveren.
 
 ## Tester
-Tester er implementert med Kotlin og TestContainers.
 
-Dette betyr at Dockerfilen blir kjørt og systemet er testet end-to-end.
-
-Testene henter .json filer fra `src/test/resources/` og lagrer PDF filene i `build/test-pdf/` med samme navn. 
+GitHub Actions starter pdfgenrs-kontaineren og tester PDF- og HTML-generering for alle `.json`-filer i `data`-mappen.
 
 ## pdfgenrs
 

@@ -1,4 +1,4 @@
-#import "../shared.typ": *
+#import "../shared/shared.typ": *
 #let data = json("/data/sykmelding/sykmelding.json")
 #set document(title: "Sykmelding", author: "Nav", keywords: ("sykmelding",))
 = Sykmelding
@@ -57,11 +57,11 @@
 #if get(followup, "meldingTilArbeidsgiver") != none [#text(weight: "medium")[Melding fra behandler til arbeidsgiver] \ #get(followup, "meldingTilArbeidsgiver") \ ]
 #for item in get(data, "sykmeldingPerioder", default: ()) {
   let activity = get(item, "aktivitet", default: (:))
-  if get(get(activity, "aktivitetIkkeMulig", default: (:)), "beskrivelse") != none [
+  #if get(get(activity, "aktivitetIkkeMulig", default: (:)), "beskrivelse") != none [
     #text(weight: "medium")[Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet] \
     #get(get(activity, "aktivitetIkkeMulig"), "beskrivelse") \
   ]
-  if get(activity, "avventendeSykmelding") != none [
+  #if get(activity, "avventendeSykmelding") != none [
     #text(weight: "medium")[Innspill til arbeidsgiver om tilrettelegging] \
     #get(activity, "avventendeSykmelding") \
   ]
