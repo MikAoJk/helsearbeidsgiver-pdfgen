@@ -1,14 +1,16 @@
-#set document(title: title, author: "Nav", keywords: ("Nav", "krav"))
+#import "/templates/fritakagp/shared.typ": *
+
+#let render-krav(data, title) = [
 = #title
 #align(left)[#text(fill: rgb("#4a515e"), size: 9pt)[Mottatt #datetime(get(data, "opprettet"))]]
 #if get(data, "referansenummer") != none {
-  #align(right)[#text(fill: rgb("#4a515e"), size: 9pt)[ID: #get(data, "referansenummer")]]
+  align(right)[#text(fill: rgb("#4a515e"), size: 9pt)[ID: #get(data, "referansenummer")]]
 }
 #if get(data, "status") == "SLETTET" {
-  #block(fill: rgb("#ca5000"), inset: 8pt, radius: 5pt)[#text(fill: white, weight: "medium")[Kravet er annullert]]
+  block(fill: rgb("#ca5000"), inset: 8pt, radius: 5pt)[#text(fill: white, weight: "medium")[Kravet er annullert]]
 }
 #if get(data, "status") == "ENDRET" {
-  #block(fill: rgb("#ca5000"), inset: 8pt, radius: 5pt)[#text(fill: white, weight: "medium")[Kravet er utdatert og erstattet av et nyere krav]]
+  block(fill: rgb("#ca5000"), inset: 8pt, radius: 5pt)[#text(fill: white, weight: "medium")[Kravet er utdatert og erstattet av et nyere krav]]
 }
 #info("Kravet gjelder", data, data)
 == Fraværsperioder
@@ -26,3 +28,4 @@
 ]
 == Innrapporert av
 #dash(get(data, "sendtAvNavn"))
+]

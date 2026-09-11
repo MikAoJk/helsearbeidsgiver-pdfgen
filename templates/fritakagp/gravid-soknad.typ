@@ -1,9 +1,9 @@
-#import "../shared/shared.typ": *
+#import "/templates/fritakagp/shared.typ": *
 #let data = json("/data/fritakagp/gravid-soknad.json")
 #set document(title: "Søknad om fritak fra arbeidsgiverperiode - Gravid", author: "Nav")
 = Søknad om fritak fra arbeidsgiverperiode - Gravid
 #align(left)[#text(fill: rgb("#4a515e"), size: 9pt)[Mottatt #datetime(get(data, "opprettet"))]]
-#if get(data, "referansenummer") != none { #align(right)[#text(fill: rgb("#4a515e"), size: 9pt)[søknadsID: #get(data, "referansenummer")]] }
+#if get(data, "referansenummer") != none { align(right)[#text(fill: rgb("#4a515e"), size: 9pt)[søknadsID: #get(data, "referansenummer")]] }
 #info("Søknaden gjelder", data, data)
 == Termindato
 #date(get(data, "termindato"))
