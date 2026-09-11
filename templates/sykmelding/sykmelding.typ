@@ -1,4 +1,4 @@
-#import "../shared/shared.typ": *
+#import "/templates/sykmelding/shared.typ": *
 #let data = json("/data/sykmelding/sykmelding.json")
 #set document(title: "Sykmelding", author: "Nav", keywords: ("sykmelding",))
 = Sykmelding
@@ -23,12 +23,12 @@
   } else {
     "Reisetilskudd"
   }
-  #block(fill: rgb("#eef4f9"), inset: 8pt, radius: 8pt, below: 8pt)[
+  block(fill: rgb("#eef4f9"), inset: 8pt, radius: 8pt, below: 8pt)[
     #grid(columns: (1fr, 1fr, 1fr))[
       #text(weight: "semibold")[#type]
     ][#period(get(item, "fom"), get(item, "tom"))][
-      #if get(activity, "gradertSykmelding") != none [
-        #if get(get(activity, "gradertSykmelding"), "harReisetilskudd") [Med reisetilskudd] else [Uten reisetilskudd]
+      if get(activity, "gradertSykmelding") != none [
+        #if get(get(activity, "gradertSykmelding"), "harReisetilskudd", default: false) [Med reisetilskudd] else [Uten reisetilskudd]
       ] else if get(get(activity, "aktivitetIkkeMulig", default: (:)), "manglendeTilretteleggingPaaArbeidsplassen") [
         Manglende tilrettelegging på arbeidsplassen
       ] else if get(activity, "antallBehandlingsdagerUke") != none [
@@ -57,11 +57,11 @@
 #if get(followup, "meldingTilArbeidsgiver") != none [#text(weight: "medium")[Melding fra behandler til arbeidsgiver] \ #get(followup, "meldingTilArbeidsgiver") \ ]
 #for item in get(data, "sykmeldingPerioder", default: ()) {
   let activity = get(item, "aktivitet", default: (:))
-  #if get(get(activity, "aktivitetIkkeMulig", default: (:)), "beskrivelse") != none [
+  if get(get(activity, "aktivitetIkkeMulig", default: (:)), "beskrivelse") != none [
     #text(weight: "medium")[Forhold på arbeidsplassen vanskeliggjør arbeidsrelatert aktivitet] \
     #get(get(activity, "aktivitetIkkeMulig"), "beskrivelse") \
   ]
-  #if get(activity, "avventendeSykmelding") != none [
+  if get(activity, "avventendeSykmelding") != none [
     #text(weight: "medium")[Innspill til arbeidsgiver om tilrettelegging] \
     #get(activity, "avventendeSykmelding") \
   ]

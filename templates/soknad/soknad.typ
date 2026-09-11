@@ -1,4 +1,4 @@
-#import "../shared/shared.typ": *
+#import "/templates/soknad/shared.typ": *
 #let root = json("/data/soknad/soknad.json")
 #let data = get(root, "sykepengesoeknad", default: (:))
 #set document(title: "Søknad om sykepenger", author: "Nav")
@@ -13,7 +13,7 @@
 #for item in get(data, "soeknadsperioder", default: ()) {
   let kind = get(item, "sykmeldingstype")
   let title = if kind == "AKTIVITET_IKKE_MULIG" { "100% sykmeldt" } else if kind == "GRADERT" { str(get(item, "sykmeldingsgrad")) + "% sykmeldt" } else if kind == "BEHANDLINGSDAGER" { "Behandlingsdager" } else if kind == "AVVENTENDE_SYKMELDING" { "Avventende sykmelding" } else { "Reisetilskudd" }
-  #block(fill: rgb("#eef4f9"), inset: 8pt, radius: 8pt, below: 8pt)[
+  block(fill: rgb("#eef4f9"), inset: 8pt, radius: 8pt, below: 8pt)[
     #grid(columns: (1fr, 1fr))[#text(weight: "semibold")[#title]][#align(right)[#period(get(item, "fom"), get(item, "tom"))]]
     #text(size: 9pt, fill: rgb("#4a515e"))[Sykmeldingsgrad: #dash(get(item, "sykmeldingsgrad"))% \ Arbeidsuke: #dash(get(item, "avtaltTimer")) t \ Faktisk arbeidsgrad: #dash(get(item, "faktiskGrad"))% \ Arbeidet i perioden: #dash(get(item, "faktiskTimer")) t]
   ]
@@ -33,6 +33,6 @@
   #for item in absences {
     let kind = get(item, "type")
     let title = if kind == "FERIE" { "Ferie" } else if kind == "PERMISJON" { "Permisjon" } else { "Opphold i utlandet utenfor EU/EØS" }
-    #block(fill: rgb("#eef4f9"), inset: 8pt, radius: 8pt, below: 8pt)[#grid(columns: (1fr, 1fr))[#text(weight: "semibold")[#title]][#align(right)[#period(get(item, "fom"), get(item, "tom"))]]]
+    block(fill: rgb("#eef4f9"), inset: 8pt, radius: 8pt, below: 8pt)[#grid(columns: (1fr, 1fr))[#text(weight: "semibold")[#title]][#align(right)[#period(get(item, "fom"), get(item, "tom"))]]]
   }
 ]
